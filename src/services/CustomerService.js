@@ -4,6 +4,13 @@ const getAll = () => {
     return http.get(`/customers`)
 }
 
-export default {
-    getAll
+const create = (Customer) => {
+    return http.post('/customers')
 }
+
+const CustomerService = {
+    getAll,
+    saveCustomer: create
+}
+
+export default CustomerService;

@@ -1,3 +1,4 @@
+import 'moment-timezone';
 import { MenuComponent } from './menu/MenuComponent'
 import { MainRouter } from './MainRouter'
 

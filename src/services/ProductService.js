@@ -4,12 +4,24 @@ const getAll = () => {
     return http.get(`/products`)
 }
 
+const create = product => {
+    return http.post(`/products`, product)
+}
+
 const remove = (id) => {
     return http.delete(`/products/${id}`)
 }
 
-
-export default {
-    getAll,
-    remove
+const getById = id => {
+    return http.get(`/products/${id}`)
 }
+
+
+const ProductService = {
+    getAll,
+    remove,
+    create,
+    getById
+}
+
+export default ProductService

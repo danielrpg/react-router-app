@@ -1,27 +1,27 @@
 import { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import { Container, Header, Icon, Menu, Table, Button } from "semantic-ui-react"
-import EmployeeService from "../../services/EmployeService";
+import CustomerService from '../../services/CustomerService'
 
-export const EmployeeComponent = () => {
+export const CustomerComponent = () => {
 
     const history = useHistory()
 
-    const initialEmploye = {
+    const initialCustomers = {
             status: false,
             errorCode: 0,
             message: "",
-            employeeList: []
+            customerList: []
     }
 
-    const [employees, setEmployees] = useState(initialEmploye)
+    const [customers, setCustomers] = useState(initialCustomers)
 
     useEffect(() => {
-        EmployeeService.getAll()
+        CustomerService.getAll()
          .then(resp => {
-             const employeeResp = resp.data
-             if(employeeResp && employeeResp.employeeList.length > 0) {
-                setEmployees(employeeResp)
+             const customerResp = resp.data
+             if(customerResp && customerResp.customerList.length > 0) {
+                setCustomers(customerResp)
              }
          })
          .catch(e => {
@@ -29,13 +29,14 @@ export const EmployeeComponent = () => {
          })
     }, [])
 
-    const onCreateEmployeeRedirect = () => {
-        history.push('/new-employee')
+    const onCreateCustomerRedirect = () => {
+        history.push('/new-customer')
     }
+
     return (
         <Container> 
-            <Header as='h1'> <Icon name='briefcase'></Icon> List of Empoloyee </Header>
-            <Button primary onClick={onCreateEmployeeRedirect}> Create Employee </Button>
+            <Header as='h1'> <Icon name='briefcase'></Icon> List of Customers </Header>
+            <Button primary onClick={onCreateCustomerRedirect}> Create Customer </Button>
             <Table celled>
             <Table.Header>
                 <Table.Row>
@@ -48,12 +49,12 @@ export const EmployeeComponent = () => {
 
                 <Table.Body>
                     {
-                        employees.employeeList.map(employee => {
+                        customers.CustomerList.map(customer => {
                             return (
-                                <Table.Row key={employee.id}>
-                                    <Table.Cell>{employee.name}</Table.Cell>
-                                    <Table.Cell>{employee.price}</Table.Cell>
-                                    <Table.Cell>{employee.productDate}</Table.Cell>
+                                <Table.Row key={customer.id}>
+                                    <Table.Cell>{customer.name}</Table.Cell>
+                                    <Table.Cell>{customer.price}</Table.Cell>
+                                    <Table.Cell>{customer.productDate}</Table.Cell>
                                     <Table.Cell>  
                                         <Button.Group>
                                             <Button>Edit</Button>
