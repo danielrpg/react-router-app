@@ -16,12 +16,16 @@ const getById = id => {
     return http.get(`/products/${id}`)
 }
 
+const update = (id, newProduct) => {
+    return http.put(`/products/${id}`, newProduct)
+}
 
 const ProductService = {
     getAll,
     remove,
     create,
-    getById
+    getById,
+    update
 }
 
 export default ProductService

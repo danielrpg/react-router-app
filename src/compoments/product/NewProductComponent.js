@@ -3,6 +3,7 @@ import { useHistory, useLocation } from "react-router-dom"
 import { Form, Button, Container, Message } from 'semantic-ui-react'
 import './product.css';
 import ProductService from '../../services/ProductService'
+import moment from 'moment'
 
 export const NewProductComponent = () => {
     //const nameInput = useRef('')
@@ -25,16 +26,30 @@ export const NewProductComponent = () => {
     const [name, setName] = useState(null)
     const [price, setPrice] = useState(0)
     const [productDate, setProductDate] = useState(null)
+    const [idProduct, setIdProduct] = useState(0)
     const [error, setError] = useState(defaultError)
+    const [isEditForm, setIsEditForm] = useState(false)
 
     useEffect(() => {
         const pathValues = location.pathname.split('/')
-        const productId = pathValues[pathValues.length - 1]
+
+        if(pathValues[2]) {
+            setIsEditForm(true)
+
+            const productId = pathValues[pathValues.length - 1]
         
-        ProductService.getById(productId)
-        .then(resp => {
-            console.log(resp.data)
-        })
+            ProductService.getById(productId)
+                .then(resp => {
+                   // console.log(resp.data)
+                    if(resp.data) {
+                        const productData = resp.data.productList[0]
+                        setIdProduct(productData.id)
+                        setName(productData.name)
+                        setPrice(productData.price)
+                        setProductDate(moment(productData.productDate).format('YYYY-MM-DD'))
+                    }
+                })
+        }
     }, [location])
 
     const onProductSubmit = (e) => {
@@ -49,7 +64,8 @@ export const NewProductComponent = () => {
                 price,
                 productDate
             };
-            ProductService.create(newProduct)
+            if(isEditForm) {
+                ProductService.update(idProduct, newProduct)
                 .then(resp => {
                     if(resp.data && resp.data.status) {
                         history.push('/product')
@@ -58,6 +74,18 @@ export const NewProductComponent = () => {
                 .catch(error => {
                     console.log(error)
                 })
+            } else {
+                ProductService.create(newProduct)
+                .then(resp => {
+                    if(resp.data && resp.data.status) {
+                        history.push('/product')
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+            }
+           
         } else {
             setError({
                 status: {
@@ -134,7 +162,8 @@ export const NewProductComponent = () => {
                         className={error.status.nameStatus? 'is-danger': ''} 
                         onChange={onHandleEventChangeName}
                         placeholder='Name'
-                        type='text' 
+                        type='text'
+                        value={name? name : ''} 
                     />
                     {
                         error.status.nameStatus
@@ -148,7 +177,8 @@ export const NewProductComponent = () => {
                         className={error.status.priceStatus? 'is-danger': ''}  
                         onChange={onHandleEventChangePrice}
                         placeholder='Price' 
-                        type='number' 
+                        type='number'
+                        value={price} 
                     />
                     {
                         error.status.priceStatus 
@@ -163,7 +193,8 @@ export const NewProductComponent = () => {
                         className={error.status.productDateStatus? 'is-danger': ''} 
                         onChange={onHandleEventChangeProductDateStatus}
                         placeholder='Date'
-                        type='date'  
+                        type='date'
+                        value={productDate? productDate : ''}  
                     />
                     {
                         error.status.productDateStatus 

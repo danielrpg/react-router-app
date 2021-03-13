@@ -41,8 +41,10 @@ export const CustomerComponent = () => {
             <Table.Header>
                 <Table.Row>
                     <Table.HeaderCell>Name</Table.HeaderCell>
-                    <Table.HeaderCell>Price</Table.HeaderCell>
-                    <Table.HeaderCell>Date</Table.HeaderCell>
+                    <Table.HeaderCell>Last Name</Table.HeaderCell>
+                    <Table.HeaderCell>CellPhone</Table.HeaderCell>
+                    <Table.HeaderCell>Address</Table.HeaderCell>
+                    <Table.HeaderCell>ZipCode</Table.HeaderCell>
                     <Table.HeaderCell>Actions</Table.HeaderCell>
                 </Table.Row>
                 </Table.Header>
