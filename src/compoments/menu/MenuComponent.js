@@ -23,6 +23,12 @@ export const MenuComponent = () => {
             </Menu.Item>
 
             <Menu.Item
+                name='product'
+            >
+                <Link to="/customer">Customer</Link>
+            </Menu.Item>
+
+            <Menu.Item
                 name='upcomingEvents'           
             >
                 Upcoming Events

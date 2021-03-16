@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useHistory, useLocation } from "react-router-dom"
 import { Form, Button, Container, Message } from 'semantic-ui-react'
-import './product.css';
+import '../../css/main.css';
 import ProductService from '../../services/ProductService'
 import moment from 'moment'
 

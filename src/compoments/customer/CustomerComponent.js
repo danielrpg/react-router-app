@@ -11,7 +11,7 @@ export const CustomerComponent = () => {
             status: false,
             errorCode: 0,
             message: "",
-            customerList: []
+            customer: []
     }
 
     const [customers, setCustomers] = useState(initialCustomers)
@@ -20,7 +20,8 @@ export const CustomerComponent = () => {
         CustomerService.getAll()
          .then(resp => {
              const customerResp = resp.data
-             if(customerResp && customerResp.customerList.length > 0) {
+
+             if(customerResp && customerResp.customer.length > 0) {
                 setCustomers(customerResp)
              }
          })
@@ -51,12 +52,14 @@ export const CustomerComponent = () => {
 
                 <Table.Body>
                     {
-                        customers.CustomerList.map(customer => {
+                        customers.customer.map(customer => {
                             return (
                                 <Table.Row key={customer.id}>
                                     <Table.Cell>{customer.name}</Table.Cell>
-                                    <Table.Cell>{customer.price}</Table.Cell>
-                                    <Table.Cell>{customer.productDate}</Table.Cell>
+                                    <Table.Cell>{customer.lastName}</Table.Cell>
+                                    <Table.Cell>{customer.cellphone}</Table.Cell>
+                                    <Table.Cell>{customer.address}</Table.Cell>
+                                    <Table.Cell>{customer.zipCode}</Table.Cell>
                                     <Table.Cell>  
                                         <Button.Group>
                                             <Button>Edit</Button>
